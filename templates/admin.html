@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f4f8; padding-top: 60px; }
+        .navbar { position: fixed; top: 0; width: 100%; background: #2E4057; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .navbar span { color: white; font-weight: bold; font-size: 16px; }
+        .navbar a { color: white; text-decoration: none; background: #dc3545; padding: 6px 14px; border-radius: 4px; font-size: 14px; }
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        h1 { color: #2E4057; margin-bottom: 24px; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .stat-card h2 { font-size: 32px; color: #2E4057; }
+        .stat-card p { color: #666; font-size: 14px; }
+        .card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 24px; }
+        .card h2 { color: #2E4057; margin-bottom: 16px; font-size: 18px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #2E4057; color: white; padding: 10px; text-align: left; font-size: 13px; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; font-size: 13px; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .role-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+        .patient { background: #cfe2ff; color: #084298; }
+        .doctor { background: #d1e7dd; color: #0f5132; }
+        .admin { background: #f8d7da; color: #842029; }
+        .flash-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            border-left: 4px solid;
+        }
+        .flash-success { background: #d4edda; color: #155724; border-color: #28a745; }
+        .flash-error   { background: #f8d7da; color: #721c24; border-color: #dc3545; }
+        .flash-warning { background: #fff3cd; color: #856404; border-color: #ffc107; }
+        @media (max-width: 820px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 6px;
+            }
+            .navbar span {
+                font-size: 13px;
+            }
+            .container {
+                padding: 0 10px;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 16px;
+            }
+            .card form {
+                flex-direction: column;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span>⚙️ Admin Panel — {{ session.user_name }}</span>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>System Overview</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- Stats Cards -->
+        <div class="stats">
+            <div class="stat-card">
+                <h2>{{ total_users }}</h2>
+                <p>Total Users</p>
+            </div>
+            <div class="stat-card">
+                <h2>{{ total_predictions }}</h2>
+                <p>Total Predictions</p>
+            </div>
+            <div class="stat-card">
+                <h2>{{ total_doctors }}</h2>
+                <p>Healthcare Providers</p>
+            </div>
+        </div>
+
+        <!-- Add Doctor -->
+        <div class="card">
+            <h2>➕ Add Healthcare Provider</h2>
+            
+            <form action="/add-doctor" method="POST" style="display: flex; gap: 12px; align-items: end;">
+                <div style="flex: 1;">
+                    <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: bold;">Name</label>
+                    <input type="text" name="name" placeholder="Dr. Ahmed" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: bold;">Email</label>
+                    <input type="email" name="email" placeholder="doctor@example.com" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: bold;">Password</label>
+                    <input type="password" name="password" placeholder="Min 6 chars" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                </div>
+                <button type="submit" style="padding: 9px 20px; background: #2E4057; color: white; border: none; border-radius: 6px; cursor: pointer;">Add</button>
+            </form>
+        </div>
+
+        <!-- All Users -->
+        <div class="card">
+            <h2>👥 All Registered Users</h2>
+            <table>
+                <tr>
+                    <th>Name</th><th>Email</th><th>Role</th><th>Joined</th>
+                </tr>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u[1] }}</td>
+                    <td>{{ u[2] }}</td>
+                    <td><span class="role-badge {{ u[4] }}">{{ u[4] }}</span></td>
+                    <td>{{ u[5] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- Model Performance -->
+        <div class="card">
+            <h2>🤖 Model Performance</h2>
+            <table>
+                <tr>
+                    <th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1 Score</th>
+                </tr>
+                <tr><td>Logistic Regression</td><td>70.1%</td><td>55.9%</td><td>65.0%</td><td>60.1%</td></tr>
+                <tr><td>Decision Tree</td><td>69.7%</td><td>54.9%</td><td>70.0%</td><td>61.5%</td></tr>
+                <tr style="background: #d4edda; font-weight: bold;"><td>SVM ✅ Active</td><td>71.4%</td><td>56.5%</td><td>76.3%</td><td>64.9%</td></tr>
+                <tr><td>Neural Network</td><td>74.9%</td><td>62.5%</td><td>68.8%</td><td>65.5%</td></tr>
+            </table>
+        </div>
+
+        <!-- Feedback -->
+        <div class="card">
+            <h2>💬 User Feedback</h2>
+            {% if feedbacks %}
+            <table>
+                <tr>
+                    <th>User</th><th>Rating</th><th>Comment</th><th>Date</th>
+                </tr>
+                {% for f in feedbacks %}
+                <tr>
+                    <td>{{ f[5] }}</td>
+                    <td>{% for i in range(f[2]) %}⭐{% endfor %}</td>
+                    <td>{{ f[3] }}</td>
+                    <td>{{ f[4] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p style="color: #666; text-align: center; padding: 20px;">No feedback yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>

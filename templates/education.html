@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Education</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f4f8; padding-top: 70px; }
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: linear-gradient(135deg, #2E4057 0%, #1a2d3d 100%);
+            padding: 14px 30px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar .brand { color: white; font-weight: bold; font-size: 17px; }
+        .navbar .nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .navbar .nav-links a {
+            color: white; text-decoration: none;
+            background: rgba(255,255,255,0.1);
+            padding: 6px 13px; border-radius: 20px; font-size: 13px; font-weight: 500;
+            transition: background 0.2s;
+        }
+        .navbar .nav-links a:hover { background: rgba(255,255,255,0.25); }
+        .navbar .right { display: flex; align-items: center; gap: 14px; }
+        .navbar .user-info { color: #cbd5e0; font-size: 13px; }
+        .navbar a.logout {
+            color: white; text-decoration: none; background: #dc3545;
+            padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
+        }
+        .navbar a.logout:hover { background: #b02a37; }
+        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+        h1 { color: #2E4057; text-align: center; margin-bottom: 24px; }
+        .card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .card h2 { color: #2E4057; margin-bottom: 12px; font-size: 18px; }
+        .card p { color: #444; line-height: 1.6; margin-bottom: 10px; }
+        .card ul { padding-left: 20px; color: #444; line-height: 1.8; }
+        .icon { font-size: 24px; margin-right: 8px; }
+        .back-btn { display: block; text-align: center; margin: 24px auto 0; padding: 12px 30px; background: #2E4057; color: white; border-radius: 6px; text-decoration: none; width: fit-content; }
+        @media (max-width: 820px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                gap: 6px;
+            }
+            .navbar .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 4px;
+            }
+            .navbar .nav-links a {
+                font-size: 11px;
+                padding: 5px 8px;
+            }
+            .navbar .brand {
+                font-size: 14px;
+            }
+            .navbar .user-info {
+                font-size: 11px;
+            }
+            .container {
+                padding: 0 10px;
+            }
+            .card {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="navbar">
+        <div class="brand">🩺 Diabetes Risk Predictor</div>
+            <div class="nav-links">
+                <a href="/">🔍 Predict</a>
+                <a href="/dashboard">📊 Dashboard</a>
+                <a href="/history">📋 History</a>
+                <a href="/education">📚 Education</a>
+                <a href="/feedback">💬 Feedback</a>
+            </div>
+        <div class="right">
+            {% if session.user_name %}
+            <span class="user-info">👤 {{ session.user_name }} ({{ session.user_role }})</span>
+            {% endif %}
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>📚 Diabetes Education Center</h1>
+
+        <div class="card">
+            <h2><span class="icon">🩸</span>What is Diabetes?</h2>
+            <p>Diabetes is a chronic condition where the body either doesn't produce enough insulin or can't effectively use the insulin it produces, resulting in elevated blood glucose levels. Over time, high glucose can damage organs and blood vessels.</p>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">⚠️</span>Key Risk Factors</h2>
+            <ul>
+                <li>High glucose levels and family history (genetics)</li>
+                <li>Being overweight or obese (high BMI)</li>
+                <li>Physical inactivity</li>
+                <li>Age above 45 years</li>
+                <li>High blood pressure</li>
+                <li>History of gestational diabetes during pregnancy</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">🥗</span>Prevention Strategies</h2>
+            <ul>
+                <li>Maintain a healthy weight through balanced diet</li>
+                <li>Exercise regularly — at least 30 minutes a day</li>
+                <li>Reduce intake of sugary and processed foods</li>
+                <li>Monitor blood glucose levels periodically</li>
+                <li>Avoid smoking and limit alcohol consumption</li>
+                <li>Get regular health checkups, especially after age 40</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">💪</span>Healthy Lifestyle Guidelines</h2>
+            <ul>
+                <li>Eat more fiber-rich foods — vegetables, whole grains, legumes</li>
+                <li>Stay hydrated and limit sugary drinks</li>
+                <li>Manage stress through relaxation techniques</li>
+                <li>Get 7-8 hours of quality sleep each night</li>
+                <li>Consult your doctor for regular screening if at risk</li>
+            </ul>
+        </div>
+
+        <div class="card" style="background: #fff3cd;">
+            <h2 style="color: #856404;"><span class="icon">⚠️</span>Important Disclaimer</h2>
+            <p style="color: #856404;">This information is for educational purposes only and does not replace professional medical advice. Always consult a qualified healthcare provider for diagnosis and treatment.</p>
+        </div>
+    </div>
+</body>
+</html>

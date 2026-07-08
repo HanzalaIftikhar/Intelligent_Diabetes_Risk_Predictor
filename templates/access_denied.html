@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied | Diabetes Risk Predictor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 48px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            width: 460px;
+            text-align: center;
+            border-top: 5px solid #dc3545;
+        }
+        .icon { font-size: 56px; margin-bottom: 16px; }
+        h1 {
+            color: #dc3545;
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+        p {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .role-badge {
+            display: inline-block;
+            background: #f8d7da;
+            color: #842029;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin: 12px 0 24px;
+        }
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #856404;
+            text-align: left;
+            margin-bottom: 28px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 11px 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 6px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.85; }
+        .btn-primary { background: #2E4057; color: white; }
+        .btn-secondary { background: #f0f4f8; color: #2E4057; border: 1px solid #cbd5e0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚫</div>
+        <h1>Access Denied</h1>
+        <p>You do not have permission to view this page.</p>
+
+        {% if session.user_role %}
+        <div class="role-badge">Your role: {{ session.user_role }}</div>
+        {% endif %}
+
+        <div class="disclaimer">
+            This system is a prototype decision-support tool for educational purposes.
+            Each role has a specific set of pages it can access.
+        </div>
+
+        <p style="margin-bottom: 20px; font-size: 14px;">
+            Go back to your dashboard or log out and sign in with the correct account.
+        </p>
+
+        {% if session.user_role == 'patient' %}
+            <a href="/" class="btn btn-primary">🏠 Go to Predictor</a>
+        {% elif session.user_role == 'doctor' %}
+            <a href="/doctor" class="btn btn-primary">🏥 Go to Doctor Dashboard</a>
+        {% elif session.user_role == 'admin' %}
+            <a href="/admin" class="btn btn-primary">⚙️ Go to Admin Panel</a>
+        {% else %}
+            <a href="/login" class="btn btn-primary">🔑 Go to Login</a>
+        {% endif %}
+
+        <a href="/logout" class="btn btn-secondary">Logout</a>
+    </div>
+</body>
+</html>

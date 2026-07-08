@@ -1,0 +1,41 @@
+# Python Virtual Environments
+diabetes__env/
+venv/
+env/
+.venv/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Database Files (NEVER commit real user data)
+*.db
+*.sqlite
+*.sqlite3
+diabetes.db
+
+# Environment Variables (contains secret key)
+.env
+.env.local
+
+# Log Files
+*.log
+dtpl.error.log
+
+# Flask Instance Folder
+instance/
+
+# IDE / Editor Config
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS Temporary Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter Checkpoints
+.ipynb_checkpoints/
