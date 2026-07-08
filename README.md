@@ -165,8 +165,8 @@ diabetes-risk-predictor/
     ├── doctor.html           # Doctor dashboard (all patients)
     ├── admin.html            # Admin panel (user management)
     ├── education.html        # Diabetes education content
-    └── feedback.html         # Star rating feedback form
-    ├── access_denied.html       # Access denied page for unauthorized role access
+    ├── feedback.html             # Star rating feedback form
+    └── access_denied.html        # Access denied page for unauthorized role access
 ```
 
 > **Note:** `diabetes.db` is excluded from Git (see `.gitignore`). A fresh database is created automatically when you first run the app.
@@ -177,7 +177,7 @@ diabetes-risk-predictor/
 
 ### Prerequisites
 
-- Python 3.9 or higher
+- Python 3.12 recommended
 - pip
 
 ### Step 1 — Clone the repository
@@ -261,7 +261,6 @@ Open your browser and go to: **http://127.0.0.1:5000**
 ---
 
 
-
 ## 📸 Screenshots
 
 ### Prediction Form
@@ -272,7 +271,7 @@ Open your browser and go to: **http://127.0.0.1:5000**
 
 ### Patient Dashboard
 ![Patient Dashboard](screenshots/patient-dashboard.png)
-![Patient Dashboard](screenshots/patient-dashboard(1).png)
+![Patient Dashboard](screenshots/patient-dashboard2.png)
 
 ### Admin Panel
 ![Admin Panel](screenshots/admin.png)
