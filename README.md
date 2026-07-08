@@ -36,6 +36,11 @@
     - [Step 6 — Run the application](#step-6--run-the-application)
   - [🔑 Demo Credentials](#-demo-credentials)
   - [📸 Screenshots](#-screenshots)
+    - [Prediction Form](#prediction-form)
+    - [Result Page](#result-page)
+    - [Patient Dashboard](#patient-dashboard)
+    - [Admin Panel](#admin-panel)
+    - [Doctor Dashboard](#doctor-dashboard)
   - [🔒 Security Notes](#-security-notes)
   - [🔮 Future Improvements](#-future-improvements)
 
@@ -255,9 +260,28 @@ Open your browser and go to: **http://127.0.0.1:5000**
 
 ---
 
+
+
 ## 📸 Screenshots
 
-> _Screenshots to be added after final UI polish._
+### Prediction Form
+![Prediction Form](screenshots/prediction.png)
+
+### Result Page
+![Result Page](screenshots/result.png)
+
+### Patient Dashboard
+![Patient Dashboard](screenshots/patient-dashboard.png)
+![Patient Dashboard](screenshots/patient-dashboard(1).png)
+
+### Admin Panel
+![Admin Panel](screenshots/admin.png)
+![Admin Panel](screenshots/admin2.png)
+
+### Doctor Dashboard
+![Doctor Dashboard](screenshots/doc.png)
+![Doctor Dashboard](screenshots/doc2.png)
+
 
 | Page | Description |
 |------|-------------|
